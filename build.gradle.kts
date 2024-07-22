@@ -49,12 +49,6 @@ jib {
         image = "767397978317.dkr.ecr.ap-northeast-2.amazonaws.com/test"
         tags = setOf(envTag(env), getGitHash())
     }
-    container {
-        jvmFlags = listOf(
-            "-Duser.timezone=Asia/Seoul",
-            "-XX:+UseContainerSupport"
-        )
-    }
 }
 
 fun envTag(env: String): String {
