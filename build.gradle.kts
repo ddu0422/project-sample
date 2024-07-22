@@ -40,25 +40,28 @@ kotlin {
 }
 
 jib {
-//    val env = System.getenv("spring.profiles.active") ?: ""
-//    val memory = when (env) {
-//        "dev" -> listOf("-Xms512m", "-Xmx1024m")
-//        "prod" -> listOf("-Xms1024m", "-Xmx2048m")
-//        else -> listOf("-Xms256m", "-Xmx512m")
-//    }
+    val env = project.properties["env"] as String? ?: "dev"
 
     from {
         image = "amazoncorretto:21"
     }
     to {
         image = "767397978317.dkr.ecr.ap-northeast-2.amazonaws.com/test"
-        tags = setOf("latest", getGitHash())
+        tags = setOf(envTag(env), getGitHash())
     }
     container {
         jvmFlags = listOf(
-            "-XX:InitialRAMPercentage=50",
-            "-XX:MaxRAMPercentage=50"
+            "-Duser.timezone=Asia/Seoul",
+            "-XX:+UseContainerSupport"
         )
+    }
+}
+
+fun envTag(env: String): String {
+    return when (env) {
+        "prod" -> "prod-latest"
+        "stage" -> "stage-latest"
+        else -> "dev-latest"
     }
 }
 
