@@ -54,12 +54,12 @@ jib {
         image = "767397978317.dkr.ecr.ap-northeast-2.amazonaws.com/test"
         tags = setOf("latest", getGitHash())
     }
-//    container {
-//        jvmFlags = listOf(
-//            "-Duser.timezone=Asia/Seoul",
-//            "-XX:+UseContainerSupport"
-//        )
-//    }
+    container {
+        jvmFlags = listOf(
+            "-XX:InitialRAMPercentage=50",
+            "-XX:MaxRAMPercentage=50"
+        )
+    }
 }
 
 fun getGitHash(): String {
