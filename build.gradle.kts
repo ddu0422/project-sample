@@ -40,6 +40,13 @@ kotlin {
 }
 
 jib {
+    val env = System.getProperty("spring.profiles.active") ?: ""
+    val memory = when (env) {
+        "dev" -> listOf("-Xms512m", "-Xmx1024m")
+        "prod" -> listOf("-Xms1024m", "-Xmx2048m")
+        else -> listOf("-Xms256m", "-Xmx512m")
+    }
+
     from {
         image = "amazoncorretto:21"
     }
@@ -48,10 +55,10 @@ jib {
         tags = setOf("latest", getGitHash())
     }
     container {
-        jvmFlags = listOf(
+        jvmFlags = memory.plus(listOf(
             "-Duser.timezone=Asia/Seoul",
             "-XX:+UseContainerSupport"
-        )
+        ))
     }
 }
 
