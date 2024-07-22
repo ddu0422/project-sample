@@ -1,4 +1,4 @@
-import com.google.cloud.tools.jib.api.Jib
+import java.io.ByteArrayOutputStream
 
 plugins {
     id("org.springframework.boot") version "3.3.1"
@@ -45,7 +45,7 @@ jib {
     }
     to {
         image = "767397978317.dkr.ecr.ap-northeast-2.amazonaws.com/test"
-        tags = setOf("latest")
+        tags = setOf("latest", getGitHash())
     }
     container {
         jvmFlags = listOf(
@@ -53,6 +53,15 @@ jib {
             "-Xmx1024m"
         )
     }
+}
+
+fun getGitHash(): String {
+    val stdOut = ByteArrayOutputStream()
+    exec {
+        commandLine("git", "rev-parse", "--short", "HEAD")
+        standardOutput = stdOut
+    }
+    return stdOut.toString().trim()
 }
 
 tasks.withType<Test> {
