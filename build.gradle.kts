@@ -40,7 +40,7 @@ kotlin {
 }
 
 jib {
-    val env = System.getProperty("spring.profiles.active") ?: ""
+    val env = System.getenv("spring.profiles.active") ?: ""
     val memory = when (env) {
         "dev" -> listOf("-Xms512m", "-Xmx1024m")
         "prod" -> listOf("-Xms1024m", "-Xmx2048m")
