@@ -47,6 +47,12 @@ jib {
         image = "767397978317.dkr.ecr.ap-northeast-2.amazonaws.com/test"
         tags = setOf("latest", getGitHash())
     }
+    container {
+        jvmFlags = listOf(
+            "-Xms512m",
+            "-Xmx1024m"
+        )
+    }
 }
 
 fun getGitHash(): String {

@@ -20,7 +20,7 @@ fun main(args: Array<String>) {
     println("Free Memory: ${freeMemory.div(MB)} $MEMORY_UNIT")
     println("Allocated Memory: ${allocatedMemory.div(MB)} $MEMORY_UNIT")
     println("Max Memory: ${maxMemory.div(MB)} $MEMORY_UNIT")
-    println("Total Memory: ${freeMemory + maxMemory.minus(allocatedMemory).div(MB)} $MEMORY_UNIT")
+    println("Total Memory: ${freeMemory.plus(maxMemory).minus(allocatedMemory).div(MB)} $MEMORY_UNIT")
     println("===============================================")
 
     runApplication<ProjectSampleApplication>(*args)
