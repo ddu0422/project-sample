@@ -16,12 +16,12 @@ fun main(args: Array<String>) {
     val freeMemory = runtime.freeMemory()
     val allocatedMemory = runtime.totalMemory()
 
-    println("================= Memory Info =================")
+    println("|================= Memory Info =================|")
     println("Free Memory: ${freeMemory.div(MB)} $MEMORY_UNIT")
     println("Allocated Memory: ${allocatedMemory.div(MB)} $MEMORY_UNIT")
     println("Max Memory: ${maxMemory.div(MB)} $MEMORY_UNIT")
     println("Total Memory: ${(freeMemory.plus(maxMemory).minus(allocatedMemory)).div(MB)} $MEMORY_UNIT")
-    println("===============================================")
+    println("|===============================================|")
 
     runApplication<ProjectSampleApplication>(*args)
 }
