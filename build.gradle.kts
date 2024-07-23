@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.de.undercouch.gradle.tasks.download.Download
 import java.io.ByteArrayOutputStream
 
 plugins {
@@ -47,7 +48,9 @@ jib {
     }
     to {
         image = "767397978317.dkr.ecr.ap-northeast-2.amazonaws.com/test"
-        tags = setOf(envTag(env), getGitHash())
+        project.afterEvaluate {
+            tags = setOf(envTag(env), getGitHash())
+        }
     }
 }
 
@@ -66,6 +69,16 @@ fun getGitHash(): String {
         standardOutput = stdOut
     }
     return stdOut.toString().trim()
+}
+
+tasks.register<Download>("downloadAgent") {
+    println("Hello")
+    src("https://project-sample-test.s3.ap-northeast-2.amazonaws.com/dd-java-agent.jar")
+    dest("src/main/jib/agents/dd-java-agent.jar")
+}
+
+tasks.jib {
+    dependsOn("downloadAgent")
 }
 
 tasks.withType<Test> {
