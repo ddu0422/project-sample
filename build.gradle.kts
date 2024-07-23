@@ -42,23 +42,16 @@ kotlin {
 
 jib {
     val env = project.properties["env"] as String? ?: "dev"
+    val service = "test"
 
     from {
         image = "amazoncorretto:21"
     }
     to {
-        image = "767397978317.dkr.ecr.ap-northeast-2.amazonaws.com/test"
+        image = "767397978317.dkr.ecr.ap-northeast-2.amazonaws.com/$service"
         project.afterEvaluate {
-            tags = setOf(envTag(env), getGitHash())
+            tags = setOf("latest", getGitHash())
         }
-    }
-}
-
-fun envTag(env: String): String {
-    return when (env) {
-        "prod" -> "prod-latest"
-        "stage" -> "stage-latest"
-        else -> "dev-latest"
     }
 }
 
