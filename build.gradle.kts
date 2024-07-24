@@ -53,6 +53,11 @@ jib {
             tags = setOf("latest", getGitHash())
         }
     }
+    container {
+        jvmFlags = listOf(
+            "-javaagent:agents/dd-agent.jar"
+        )
+    }
 }
 
 fun getGitHash(): String {
