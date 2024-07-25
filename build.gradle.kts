@@ -50,7 +50,7 @@ jib {
     to {
         image = "767397978317.dkr.ecr.ap-northeast-2.amazonaws.com/$service"
         project.afterEvaluate {
-            tags = setOf("latest", getGitHash())
+            tags = setOf("latest", "$env-${getGitHash()}")
         }
     }
     container {
