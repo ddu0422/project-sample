@@ -12,15 +12,18 @@ pipeline {
             }
         }
         stage('Build') {
-            withAWS(role: 'JenkinsRole', roleAccount: '767397978317', duration: 900, roleSessionName: 'jenkins-session') {
-                sh 'echo "hello"'
-                sh 'aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin 767397978317.dkr.ecr.${REGION}.amazonaws.com'
-            }
-            withCredentials([aws(credentialsId: 'BuildCredentials')]) {
-                sh 'aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin 767397978317.dkr.ecr.${REGION}.amazonaws.com'
-            }
-            withGradle {
-                sh './gradlew jib'
+            steps {
+                step {
+                    withAWS(role: 'JenkinsRole', roleAccount: '767397978317', duration: 900, roleSessionName: 'jenkins-session') {
+                        sh 'echo "hello"'
+                        sh 'aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin 767397978317.dkr.ecr.${REGION}.amazonaws.com'
+                }
+                withCredentials([aws(credentialsId: 'BuildCredentials')]) {
+                    sh 'aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin 767397978317.dkr.ecr.${REGION}.amazonaws.com'
+                }
+                withGradle {
+                    sh './gradlew jib'
+                }
             }
         }
     }
