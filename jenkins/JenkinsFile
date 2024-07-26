@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         GITHUB_URL = 'https://github.com/ddu0422/project-sample'
+        REGION = 'ap-northeast-2'
     }
 
     stages {
@@ -13,7 +14,7 @@ pipeline {
         stage('Build') {
             steps {
                 withCredentials([aws(credentialsId: 'BuildCredential')]) {
-                    sh 'aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 767397978317.dkr.ecr.ap-northeast-2.amazonaws.com'
+                    sh 'aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin 767397978317.dkr.ecr.${REGION}.amazonaws.com'
                 }
                 withGradle {
                     sh './gradlew jib'
