@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'BuildCredentials', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                withCredentials([aws(credentialsId: 'AWSCredentials')]) {
                     sh 'aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin 767397978317.dkr.ecr.${REGION}.amazonaws.com'
                 }
                 withGradle {
