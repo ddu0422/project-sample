@@ -8,12 +8,12 @@ pipeline {
     stages {
         stage('Git Clone') {
             steps {
-                git branch: 'main', credentialsId: 'GitHubCredential', url: "${GITHUB_URL}"
+                git branch: 'main', credentialsId: 'GitHubCredentials', url: "${GITHUB_URL}"
             }
         }
         stage('Build') {
             steps {
-                withCredentials([aws(credentialsId: 'BuildCredential')]) {
+                withCredentials([aws(credentialsId: 'BuildCredentials')]) {
                     sh 'aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin 767397978317.dkr.ecr.${REGION}.amazonaws.com'
                 }
                 withGradle {
