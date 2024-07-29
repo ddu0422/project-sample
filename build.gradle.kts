@@ -41,7 +41,7 @@ kotlin {
 }
 
 jib {
-    val env = project.properties["env"] as String? ?: "dev"
+    val env = project.properties["env"] as String? ?: "prod"
     val service = "test"
 
     from {
