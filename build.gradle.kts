@@ -69,14 +69,14 @@ fun getGitHash(): String {
     return stdOut.toString().trim()
 }
 
-//tasks.register<Download>("downloadAgent") {
-//    src("https://project-sample-test.s3.ap-northeast-2.amazonaws.com/dd-java-agent.jar")
-//    dest("src/main/jib/agents/dd-java-agent.jar")
-//}
-//
-//tasks.jib {
-//    dependsOn("downloadAgent")
-//}
+tasks.register<Download>("downloadAgent") {
+    src("https://project-sample-test.s3.ap-northeast-2.amazonaws.com/dd-java-agent.jar")
+    dest("src/main/jib/agents/dd-java-agent.jar")
+}
+
+tasks.jib {
+    dependsOn("downloadAgent")
+}
 
 tasks.withType<Test> {
     useJUnitPlatform()
