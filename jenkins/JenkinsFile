@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                withCredentials([aws(credentialsId: 'JenkinsBuildRole')]) {
+                withCredentials([aws(credentialsId: 'TestCredentials')]) {
                     sh 'aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin 767397978317.dkr.ecr.${REGION}.amazonaws.com'
                 }
                 withGradle {
