@@ -11,13 +11,6 @@ pipeline {
                 git branch: 'main', credentialsId: 'GitHubCredentials', url: "${GITHUB_URL}"
             }
         }
-        stage('Build Test') {
-            steps {
-                withAWS(region: 'ap-northeast-2', credentialsId: 'BuildCredentials') {
-                    sh 'aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin 767397978317.dkr.ecr.${REGION}.amazonaws.com'
-                }
-            }
-        }
         stage('Build') {
             steps {
                 withCredentials([aws(credentialsId: 'BuildCredentials')]) {
